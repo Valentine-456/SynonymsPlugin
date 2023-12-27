@@ -1,5 +1,6 @@
 package com.github.valentine456.synonymsplugin.intentions
 
+import com.github.valentine456.synonymsplugin.services.ApiNinjaThesaurusService
 import com.github.valentine456.synonymsplugin.services.ThesaurusService
 import com.intellij.codeInsight.intention.IntentionAction
 import com.intellij.openapi.components.ServiceManager
@@ -13,7 +14,7 @@ import org.jetbrains.annotations.Nls
 class ChangeTextIntentionAction : IntentionAction {
 
     override fun getText(): @Nls(capitalization = Nls.Capitalization.Sentence) String {
-        return "Change Selected Text" // Displayed text for the intention action
+        return "Change for Synonym" // Displayed text for the intention action
     }
 
     override fun getFamilyName(): @Nls(capitalization = Nls.Capitalization.Sentence) String {
@@ -32,7 +33,7 @@ class ChangeTextIntentionAction : IntentionAction {
 
         if (selectionModel.hasSelection()) {
             val selectedText = selectionModel.selectedText
-            val myService: ThesaurusService = ServiceManager.getService(project, ThesaurusService::class.java)
+            val myService: ThesaurusService = ServiceManager.getService(project, ApiNinjaThesaurusService::class.java)
 
             val chosenItem = Messages.showEditableChooseDialog(
                 "Select an option:",
