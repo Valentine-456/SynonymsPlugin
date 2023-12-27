@@ -5,6 +5,7 @@ import java.util.TreeMap
 
 @Service(Service.Level.PROJECT)
 class ThesaurusService() {
+
     val thesaurus: TreeMap<String, ArrayList<String>> = TreeMap<String, ArrayList<String>>()
     init {
         thesaurus["get"] = arrayListOf("receive", "fetch", "obtain", "read","retrieve");
@@ -13,6 +14,6 @@ class ThesaurusService() {
     }
 
     public fun getSynonyms(identifier: String ): ArrayList<String>  {
-        return thesaurus.getOrDefault(identifier.lowercase(), arrayListOf());
+        return thesaurus.getOrDefault(identifier.lowercase(), arrayListOf("hello"));
     }
 }
