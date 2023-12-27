@@ -6,6 +6,21 @@
 
     <depends>com.intellij.modules.platform</depends>
 
-    <resource-bundle>messages.MyBundle</resource-bundle>
+    <extensions  defaultExtensionNs="com.intellij">
+        <intentionAction>
+            <className>com.github.valentine456.synonymsplugin.intentions.ChangeTextIntentionAction</className>
+            <category>SDK intentions</category>
+        </intentionAction>
+    </extensions>
+
+    <actions>
+        <action
+                id="SynonymsPlugin.ShowSynonymAction"
+                class="com.github.valentine456.synonymsplugin.actions.ShowSynonymAction"
+                text="Editor Replace Text"
+                description="Replaces selected text with 'Replacement'.">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+    </actions>
 
 </idea-plugin>
