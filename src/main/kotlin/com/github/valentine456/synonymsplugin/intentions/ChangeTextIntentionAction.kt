@@ -1,6 +1,7 @@
 package com.github.valentine456.synonymsplugin.intentions
 
 import com.github.valentine456.synonymsplugin.services.ApiNinjaThesaurusService
+import com.github.valentine456.synonymsplugin.services.MockThesaurusService
 import com.github.valentine456.synonymsplugin.services.ThesaurusService
 import com.intellij.codeInsight.intention.IntentionAction
 import com.intellij.openapi.components.ServiceManager
@@ -29,11 +30,9 @@ class ChangeTextIntentionAction : IntentionAction {
         val document = editor.document
         val selectionModel = editor.selectionModel
 
-
-
         if (selectionModel.hasSelection()) {
             val selectedText = selectionModel.selectedText
-            val myService: ThesaurusService = ServiceManager.getService(project, ApiNinjaThesaurusService::class.java)
+            val myService = setUpThesaurusService(project)
 
             val chosenItem = Messages.showEditableChooseDialog(
                 "Select an option:",
@@ -50,5 +49,11 @@ class ChangeTextIntentionAction : IntentionAction {
 
     override fun startInWriteAction(): Boolean {
         return true // Set to true if your action requires write access to PSI elements
+    }
+
+    private fun setUpThesaurusService(project: Project): ThesaurusService {
+        val myService: ThesaurusService = ServiceManager.getService(project, ApiNinjaThesaurusService::class.java)
+        myService.nextService = MockThesaurusService()
+        return myService
     }
 }
