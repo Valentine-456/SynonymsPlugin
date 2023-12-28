@@ -37,7 +37,7 @@ class FileThesaurusService : ThesaurusService {
             wordMap.putAll(map)
         } catch (e: Exception) {
             println("Error reading or parsing resource: ${e.message}")
-            e.printStackTrace() // Print stack trace for detailed error info
+            e.printStackTrace()
         }
     }
 }
