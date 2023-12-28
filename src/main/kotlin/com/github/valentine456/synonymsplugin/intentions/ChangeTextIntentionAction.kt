@@ -1,6 +1,7 @@
 package com.github.valentine456.synonymsplugin.intentions
 
 import com.github.valentine456.synonymsplugin.services.ApiNinjaThesaurusService
+import com.github.valentine456.synonymsplugin.services.BigHugeThesaurusService
 import com.github.valentine456.synonymsplugin.services.MockThesaurusService
 import com.github.valentine456.synonymsplugin.services.ThesaurusService
 import com.intellij.codeInsight.intention.IntentionAction
@@ -52,8 +53,13 @@ class ChangeTextIntentionAction : IntentionAction {
     }
 
     private fun setUpThesaurusService(project: Project): ThesaurusService {
-        val myService: ThesaurusService = ServiceManager.getService(project, ApiNinjaThesaurusService::class.java)
-        myService.nextService = MockThesaurusService()
+        val myService: ThesaurusService = ServiceManager.getService(project, BigHugeThesaurusService::class.java)
+        val myService2 = ApiNinjaThesaurusService()
+        val myService3 = MockThesaurusService()
+
+        myService.nextService = myService2
+        myService2.nextService = myService3
+
         return myService
     }
 }
