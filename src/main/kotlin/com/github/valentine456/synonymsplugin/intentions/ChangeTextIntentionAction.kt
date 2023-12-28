@@ -14,11 +14,11 @@ import org.jetbrains.annotations.Nls
 class ChangeTextIntentionAction : IntentionAction {
 
     override fun getText(): @Nls(capitalization = Nls.Capitalization.Sentence) String {
-        return "Change for Synonym" // Displayed text for the intention action
+        return "Change for Synonym"
     }
 
     override fun getFamilyName(): @Nls(capitalization = Nls.Capitalization.Sentence) String {
-        return "Text Actions" // Grouping label for similar intention actions
+        return "Text Actions"
     }
 
     override fun isAvailable(project: Project, editor: Editor?, file: PsiFile?): Boolean {
@@ -60,6 +60,6 @@ class ChangeTextIntentionAction : IntentionAction {
     }
 
     override fun startInWriteAction(): Boolean {
-        return true // Set to true if your action requires write access to PSI elements
+        return true
     }
 }

@@ -17,8 +17,8 @@
         <action
                 id="SynonymsPlugin.ShowSynonymAction"
                 class="com.github.valentine456.synonymsplugin.actions.ShowSynonymAction"
-                text="Editor Replace Text"
-                description="Replaces selected text with 'Replacement'.">
+                text="Change for Synonym"
+                description="Replaces selected text with synonym.">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
     </actions>
