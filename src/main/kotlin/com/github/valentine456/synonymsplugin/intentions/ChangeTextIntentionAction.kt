@@ -2,8 +2,10 @@ package com.github.valentine456.synonymsplugin.intentions
 
 import com.github.valentine456.synonymsplugin.services.*
 import com.intellij.codeInsight.intention.IntentionAction
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.editor.SelectionModel
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
 import com.intellij.psi.PsiFile
@@ -21,27 +23,30 @@ class ChangeTextIntentionAction : IntentionAction {
     }
 
     override fun isAvailable(project: Project, editor: Editor?, file: PsiFile?): Boolean {
-        return editor != null && file != null // Enable the intention action when there's an editor and file
+        if (editor != null && file != null) {
+            return editor.selectionModel.hasSelection()
+        }
+        return false
     }
 
     override fun invoke(project: Project, editor: Editor, file: PsiFile?) {
         val document = editor.document
         val selectionModel = editor.selectionModel
+        val selectedText = editor.selectionModel.selectedText ?: return
 
-        if (selectionModel.hasSelection()) {
-            val selectedText = selectionModel.selectedText
-            val myService = setUpThesaurusService(project)
-
-            val chosenItem = Messages.showEditableChooseDialog(
-                "Select an option:",
-                "Choose Option",
-                Messages.getInformationIcon(),
-                myService.getSynonyms(selectedText!!).toTypedArray(),
-                myService.getSynonyms(selectedText).firstOrNull(),
-                null
-            )
-            // Replace with your desired fixed string
-            document.replaceString(selectionModel.selectionStart, selectionModel.selectionEnd, chosenItem!!)
+        val myService = setUpThesaurusService(project)
+        val identifier = selectedText.lowercase()
+        val synonyms = arrayListOf(identifier) + myService.getSynonyms(identifier)
+        val chosenItem = Messages.showEditableChooseDialog(
+            "Select an option:",
+            "Choose Option",
+            Messages.getInformationIcon(),
+            synonyms.toTypedArray(),
+            synonyms.first(),
+            null
+        )
+        chosenItem?.let {
+            editor.document.replaceString(selectionModel.selectionStart, selectionModel.selectionEnd, chosenItem)
         }
     }
 
