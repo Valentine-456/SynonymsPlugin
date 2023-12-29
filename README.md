@@ -3,14 +3,46 @@
 ## Test task
 Implement a plugin for IntelliJ Ultimate that shows synonyms for identifiers in source code. You can achieve this by either using an existing thesaurus (synonym dictionary) or by creating your own and implementing an intention action applicable on identifiers which lists synonyms for the given identifier.
 
+-----------------
+
+## Features
+This plugin allows you to change a selected identifier in your codebase andreplace it with a chosen synonym.
+
+### IntentionAction:
+
+1) Select text you would like to change (it should be a single word, otherwise no synonym will be found for the entire phrase).
+![Select text](.github/readme/screen1.png)
+2) Choose appropriate synonym, you can also input your own new identifier
+![Select text](.github/readme/screen2.png)
+
+### Action (another way to use the plugin):
+1) Select text you would like to change and right-click on the selection: 
+![Select text](.github/readme/screen3.png)
+2) The 2nd part is the same as with the intention function:
+![Select text](.github/readme/screen4.png)
+
+### Thesaurus:
+
+When I started developing this plugin, I uderstood that it would be difficult to create a sufficiently big thesaurus to be able to use it even in testing. Therefore I decided to use the following strategy for synonym lookups:
+1) Check local json file with top 60 terms, if not found, move to the next stage
+2) Check if first API has needed list of synonyms, if not, move to the next stage
+3)  Check if second API has needed list of synonyms, if not, move to the next stage
+4) Mock Thesaurus Service that returns empty list
+
+This pattern allows to find synonym list to almost any possible identifier in English language
+
+
+### Further improvement ideas:
+
+- sort synonyms by length (shortest first)
+- filter out long irrelevant (containing spaces) synonyms
+- expand the json file with local thesaurus for better coverage of identifiers
+- add multiple Language support (German, Spanish, French, etc) 
+- add features of replacing all identifier's occurences in file, package, etc.. 
+
+-------------------
 
 ## Installation
-
-- Using the IDE built-in plugin system:
-  
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "SynonymsPlugin"</kbd> >
-  <kbd>Install</kbd>
-
 
 - Manually:
 
